@@ -2,19 +2,70 @@ if !exists("g:commentvim_loaded")
 function! Comment()
 python << EOF
 import vim
-filename = vim.current.buffer.name
-f = open(filename, 'r')
-lines = f.readlines()
-f.close()
-lines[0] = "<?php\n /**\n * PHP version 5.5 \n * \n *  @category  PHP\n * @package   Dopool_Platform\n * @author    zhangjun <zhangjun516@126.com>\n * @copyright 2014 zhangjun\n * @license   http://www.dopool.com starchina\n * @link      http://www.dopool.com \n */\n"
-f = open(filename, 'w')
-f.writelines(lines)
-f.close()
+docComment = []
+cVersion = "    *PHP version 5.5"
+cCategory = "    * @category StarChina"
+cAuthor = "    * @author zhangjun <zhangjun516@126.com>"
+cCopyright = "    * @copyright 2014 zhangjun"
+cLicense = "    * @license  http://www.wownepiece.com zhangjun"
+cLink = "    * @link      http://www.wownepiece.com"
+docComment.append('    /**')
+docComment.append(cVersion)
+docComment.append(cCategory)
+docComment.append(cAuthor)
+docComment.append(cCopyright)
+docComment.append(cLicense)
+docComment.append(cLink)
+docComment.append('    */')
+length = len(docComment)
+    
+vim.current.buffer[1:length] = docComment
+
 EOF
 endfunc
+
+
+function! FuncComment()
+python << EOF
+import vim,re,string
+(row, col) = vim.current.window.cursor
+filename = vim.current.buffer.name
+f = open(filename, 'r')
+global lines 
+lines = f.readlines()
+
+line = vim.current.buffer[row-1]
+p = re.search('\(.*.\)', line)
+if p :
+    line = p.group(0)
+    line = line.replace('(', '')
+    line = line.replace(')', '')
+    params = line.split(',')
+    parmas = list(params);
+    strs = "    /**"
+    paramList = []
+    paramList.append(strs)
+    strs = "    *"
+    paramList.append(strs)
+    for param in params:
+        param.strip()
+        parString = "    * @param mixed "+param+' '+param
+        paramList.append(parString)
+
+    endString ="    * @return mixed"
+    paramList.append(endString)
+    endString = "    */"
+    paramList.append(endString)
+    length = len(paramList)
+    
+    vim.current.buffer[row-1:length] = paramList
+EOF
+endfunc
+
 
 endif
 
 
-command!  FC :call Comment()
-command!  CF :call ConComment()
+command!  DC  :call Comment()
+
+command!  FC :call FuncComment()
