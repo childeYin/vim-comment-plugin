@@ -4,10 +4,11 @@ python << EOF
 import vim
 docComment = []
 cVersion = "    *PHP version 5.5"
-cCategory = "    * @category StarChina"
-cAuthor = "    * @author zhangjun <zhangjun516@126.com>"
+cCategory = "    * @category   StarChina"
+cCategory = "    * @package StarChina"
+cAuthor = "    * @author     zhangjun <zhangjun516@126.com>"
 cCopyright = "    * @copyright 2014 zhangjun"
-cLicense = "    * @license  http://www.wownepiece.com zhangjun"
+cLicense = "    * @license   http://www.wownepiece.com zhangjun"
 cLink = "    * @link      http://www.wownepiece.com"
 docComment.append('    /**')
 docComment.append(cVersion)
@@ -16,6 +17,7 @@ docComment.append(cAuthor)
 docComment.append(cCopyright)
 docComment.append(cLicense)
 docComment.append(cLink)
+docComment.append('    *')
 docComment.append('    */')
 length = len(docComment)
     
@@ -56,6 +58,15 @@ if p :
     paramList.append(endString)
     endString = "    */"
     paramList.append(endString)
+    length = len(paramList)
+    
+    vim.current.buffer[row-1:length] = paramList
+else :
+    paramList = []
+    paramList.append("    /**")
+    paramList.append("    *")
+    paramList.append("    * @return mixed")
+    paramList.append("    */")
     length = len(paramList)
     
     vim.current.buffer[row-1:length] = paramList
