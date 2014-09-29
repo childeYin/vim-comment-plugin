@@ -4,9 +4,9 @@ python << EOF
 import vim
 docComment = []
 cVersion = "    *PHP version 5.5"
-cCategory = "    * @category   StarChina"
-cCategory = "    * @package StarChina"
-cAuthor = "    * @author     zhangjun <zhangjun516@126.com>"
+cCategory = "    * @category   e路相扶"
+cCategory = "    * @package e路相扶"
+cAuthor = "    * @author     e路相扶<zhangjun516@126.com>"
 cCopyright = "    * @copyright 2014 zhangjun"
 cLicense = "    * @license   http://www.wownepiece.com zhangjun"
 cLink = "    * @link      http://www.wownepiece.com"
