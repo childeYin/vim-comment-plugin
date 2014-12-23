@@ -10,6 +10,8 @@ cAuthor = "    * @author     e路相扶<zhangjun516@126.com>"
 cCopyright = "    * @copyright 2014 zhangjun"
 cLicense = "    * @license   http://www.wownepiece.com zhangjun"
 cLink = "    * @link      http://www.wownepiece.com"
+time = time.strftime('%Y-%m-%d',time.localtime(time.time()))                                                               
+cTime = "   * @time " + time 
 docComment.append('    /**')
 docComment.append(cVersion)
 docComment.append(cCategory)
@@ -17,6 +19,7 @@ docComment.append(cAuthor)
 docComment.append(cCopyright)
 docComment.append(cLicense)
 docComment.append(cLink)
+docComment.append(cTime)
 docComment.append('    *')
 docComment.append('    */')
 length = len(docComment)
@@ -51,7 +54,8 @@ if p :
     paramList.append(strs)
     for param in params:
         param.strip()
-        parString = "    * @param mixed "+param+' '+param
+        paramVal = param.replace('$', '')
+        parString = "    * @param mixed "+param+' '+paramVal
         paramList.append(parString)
 
     endString ="    * @return mixed"
